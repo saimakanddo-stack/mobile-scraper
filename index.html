@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Advanced web scraping tool optimized for mobile devices">
+
+    <title>Mobile Tools - Web Scraper</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/icons/icon-512.png">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/themes.css">
+    <link rel="stylesheet" href="/css/mobile.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1 class="app-title">📱 Mobile Scraper</h1>
+            <div class="header-actions">
+                <button class="btn btn-icon" id="themeToggle" title="Toggle theme">
+                    <span id="themeIcon">🌙</span>
+                </button>
+                <button class="btn btn-icon" id="menuBtn" title="Menu">
+                    <span>☰</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main" id="mainContent">
+            <!-- Scraper View -->
+            <div id="scraperView" class="view">
+                <!-- Mode Selection -->
+                <div class="card">
+                    <h2 class="card-title">Scraping Mode</h2>
+                    <div class="tabs">
+                        <button class="tab active mode-tab" data-mode="page-range">📄 Page Range</button>
+                        <button class="tab mode-tab" data-mode="custom-links">🔗 Custom Links</button>
+                    </div>
+                </div>
+
+                <!-- Page Range Controls -->
+                <div class="card" id="pageRangeControls">
+                    <h2 class="card-title">Page Range Settings</h2>
+
+                    <div class="form-group">
+                        <label class="form-label" for="websiteUrl">Website URL</label>
+                        <input type="url" id="websiteUrl" class="form-input" placeholder="https://example.com/movies"
+                            list="websiteUrlSuggestions">
+                        <datalist id="websiteUrlSuggestions">
+                            <option value="https://mlinkbd4.movielinkbd.li">
+                            <option value="https://play7c7.movielinkbd.li">
+                        </datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="startPage">Start Page</label>
+                        <input type="number" id="startPage" class="form-input" value="1" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="endPage">End Page</label>
+                        <input type="number" id="endPage" class="form-input" value="1" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="scrapingDirection">Direction</label>
+                        <select id="scrapingDirection" class="form-select">
+                            <option value="start-to-end">Start → End (Oldest First)</option>
+                            <option value="end-to-start">End → Start (Newest First)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Custom Links Controls -->
+                <div class="card hidden" id="customLinksControls">
+                    <h2 class="card-title">Custom Links</h2>
+
+                    <div class="form-group">
+                        <label class="form-label" for="customLinksTextarea">Movie Links (One per line)</label>
+                        <textarea id="customLinksTextarea" class="form-textarea"
+                            placeholder="https://example.com/movie-1&#10;https://example.com/movie-2"></textarea>
+                    </div>
+                </div>
+
+                <!-- JSON Import (Collapsible) -->
+                <div class="card">
+                    <div class="collapsible-header" id="jsonImportHeader">
+                        <span>📥 Import Existing JSON (Optional)</span>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content collapsed" id="jsonImportContent">
+                        <div class="form-group">
+                            <label class="form-label" for="jsonUrl">JSON URL</label>
+                            <input type="url" id="jsonUrl" class="form-input"
+                                placeholder="https://example.com/data.json" list="jsonUrlSuggestions">
+                            <datalist id="jsonUrlSuggestions">
+                                <option
+                                    value="https://saimakanddo-stack.github.io/dubflixhtb-json-data/data/movies.json">
+                            </datalist>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="mergePosition">Merge Position</label>
+                            <select id="mergePosition" class="form-select">
+                                <option value="append">Append (Add to End)</option>
+                                <option value="prepend">Prepend (Add to Beginning)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Panel -->
+                <div class="card">
+                    <h2 class="card-title">Status</h2>
+                    <div class="status-panel">
+                        <div class="status-item">
+                            <span class="status-label">Status:</span>
+                            <span id="statusText" class="status-value">Ready</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Current Page:</span>
+                            <span id="currentPage" class="status-value">0</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Cards Scraped:</span>
+                            <span id="cardsScraped" class="status-value">0</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Duplicates:</span>
+                            <span id="duplicatesSkipped" class="status-value">0</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Running Time:</span>
+                            <span id="runningTime" class="status-value">00:00:00</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Est. Completion:</span>
+                            <span id="estimatedCompletion" class="status-value">--:--:--</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results View -->
+            <div id="resultsView" class="view hidden">
+                <!-- Results (Collapsible) -->
+                <div class="card">
+                    <div class="collapsible-header" id="resultsHeader">
+                        <span>📊 Results & Export</span>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content collapsed" id="resultsContent">
+                        <div class="button-group">
+                            <button id="viewFullBtn" class="btn btn-primary">
+                                <span>📊</span> View Full JSON
+                            </button>
+                            <button id="viewNewBtn" class="btn btn-primary">
+                                <span>✨</span> View New Only
+                            </button>
+                            <button id="copyFullBtn" class="btn btn-success">
+                                <span>📋</span> Copy Full JSON
+                            </button>
+                            <button id="copyContentBtn" class="btn btn-success">
+                                <span>📄</span> Copy Content Only
+                            </button>
+                            <button id="saveBtn" class="btn btn-success">
+                                <span>💾</span> Save JSON File
+                            </button>
+                            <button id="shareBtn" class="btn btn-success">
+                                <span>📤</span> Share
+                            </button>
+                        </div>
+
+                        <div class="json-viewer" id="jsonViewer">
+                            <pre>[]</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Preview -->
+                <div class="card">
+                    <h2 class="card-title">📺 Preview</h2>
+                    <div id="previewContainer" class="preview-container">
+                        <!-- Movie cards will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings View -->
+            <div id="settingsView" class="view hidden">
+                <div class="card">
+                    <h2 class="card-title">⚙️ App Settings</h2>
+
+                    <div class="form-group">
+                        <label class="form-label" for="proxyUrl">Proxy Configuration</label>
+                        <p class="form-help">Enter your Local Proxy or Cloudflare Worker URL</p>
+                        <input type="url" id="proxyUrl" class="form-input"
+                            placeholder="https://mobile-scraper-proxy.saimakanddo.workers.dev/">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="vibrationSetting">Haptic Feedback</label>
+                        <select id="vibrationSetting" class="form-select">
+                            <option value="enabled">Enabled</option>
+                            <option value="disabled">Disabled</option>
+                        </select>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="saveSettingsBtn" class="btn btn-primary">
+                            <span>💾</span> Save Settings
+                        </button>
+                        <button id="installBtn" class="btn btn-success hidden">
+                            <span>📲</span> Install App (PWA)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">ℹ️ About</h2>
+                    <div class="status-panel">
+                        <div class="status-item">
+                            <span class="status-label">Version:</span>
+                            <span class="status-value">2.0.0 (Mobile)</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Environment:</span>
+                            <span class="status-value" id="envLabel">Universal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Floating Action Button -->
+        <button class="fab" id="fab" title="Start Scraping">
+            <span id="fabIcon">▶️</span>
+        </button>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" data-view="scraper">
+                <span class="nav-icon">🔍</span>
+                <span>Scraper</span>
+            </a>
+            <a href="#" class="nav-item" data-view="results">
+                <span class="nav-icon">📊</span>
+                <span>Results</span>
+            </a>
+            <a href="#" class="nav-item" data-view="settings">
+                <span class="nav-icon">⚙️</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Scripts (ES6 Modules) -->
+    <script type="module">
+        // Import all modules
+        import * as Preview from './js/preview.js';
+
+        // Expose preview functions globally for onclick handlers
+        window.MobileScraperApp = window.MobileScraperApp || {};
+        window.MobileScraperApp.handleDownload = Preview.handleDownload;
+        window.MobileScraperApp.downloadQuality = Preview.downloadQuality;
+        window.MobileScraperApp.showDetails = Preview.showDetails;
+    </script>
+    <script src="/js/app.js" type="module"></script>
+
+    <!-- Minimal Inline Script for Immediate UI -->
+    <script>
+        // Immediate theme initialization (before modules load)
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // Show loading indicator
+        console.log('📱 Mobile Scraper Loading...');
+    </script>
+</body>
+
+</html>
