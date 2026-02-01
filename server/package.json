@@ -1,0 +1,26 @@
+{
+    "name": "mobile-scraper-proxy",
+    "version": "1.0.0",
+    "description": "CORS Proxy for Mobile Scraper PWA",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "keywords": [
+        "cors",
+        "proxy",
+        "scraper",
+        "mobile"
+    ],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.18.2",
+        "node-fetch": "^2.6.9"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.22"
+    }
+}
