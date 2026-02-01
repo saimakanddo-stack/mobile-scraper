@@ -1,0 +1,169 @@
+/* Theme Variables for Mobile Tools */
+
+:root {
+    /* Dark Theme (Default - AMOLED Friendly) */
+    --bg-primary: #000000;
+    --bg-secondary: #1a1a1a;
+    --bg-card: #2a2a2a;
+    --bg-input: #333333;
+    --bg-elevated: #3a3a3a;
+    
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --text-tertiary: #808080;
+    --text-disabled: #606060;
+    
+    /* Brand Colors */
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #818cf8;
+    --secondary: #ec4899;
+    --secondary-dark: #db2777;
+    --secondary-light: #f472b6;
+    
+    /* Accent Colors */
+    --accent-cyan: #00d9ff;
+    --accent-pink: #ff006e;
+    
+    /* Status Colors */
+    --success: #00ff88;
+    --success-dark: #00cc6a;
+    --warning: #ffaa00;
+    --warning-dark: #ff8800;
+    --danger: #ff3366;
+    --danger-dark: #ff0044;
+    --info: #00b4d8;
+    
+    /* UI Elements */
+    --border: #404040;
+    --border-light: #505050;
+    --divider: #2a2a2a;
+    --shadow: rgba(0, 0, 0, 0.5);
+    --shadow-elevated: rgba(0, 0, 0, 0.8);
+    
+    /* Overlays */
+    --overlay: rgba(0, 0, 0, 0.7);
+    --overlay-light: rgba(0, 0, 0, 0.5);
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    --gradient-secondary: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+    --gradient-accent: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
+    --gradient-success: linear-gradient(135deg, var(--success), var(--success-dark));
+    --gradient-danger: linear-gradient(135deg, var(--danger), var(--danger-dark));
+    
+    /* Spacing Scale (Mobile-optimized) */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+    
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Droid Sans Mono', 'Source Code Pro', monospace;
+    
+    /* Font Sizes (Mobile-optimized) */
+    --text-xs: 12px;
+    --text-sm: 14px;
+    --text-base: 16px;
+    --text-lg: 18px;
+    --text-xl: 20px;
+    --text-2xl: 24px;
+    --text-3xl: 30px;
+    --text-4xl: 36px;
+    
+    /* Line Heights */
+    --leading-tight: 1.25;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.75;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+    --transition-slow: 350ms ease;
+    
+    /* Z-index Scale */
+    --z-base: 0;
+    --z-dropdown: 1000;
+    --z-sticky: 1100;
+    --z-fixed: 1200;
+    --z-modal-backdrop: 1300;
+    --z-modal: 1400;
+    --z-popover: 1500;
+    --z-tooltip: 1600;
+}
+
+/* Light Theme */
+[data-theme="light"] {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f5;
+    --bg-card: #ffffff;
+    --bg-input: #f0f0f0;
+    --bg-elevated: #ffffff;
+    
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --text-tertiary: #6a6a6a;
+    --text-disabled: #9a9a9a;
+    
+    --border: #e0e0e0;
+    --border-light: #d0d0d0;
+    --divider: #f0f0f0;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --shadow-elevated: rgba(0, 0, 0, 0.15);
+    
+    --overlay: rgba(0, 0, 0, 0.4);
+    --overlay-light: rgba(0, 0, 0, 0.2);
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    :root {
+        --border: #606060;
+        --text-secondary: #d0d0d0;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --transition-fast: 0ms;
+        --transition-base: 0ms;
+        --transition-slow: 0ms;
+    }
+}
+
+/* System Theme Detection */
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+        --bg-primary: #ffffff;
+        --bg-secondary: #f5f5f5;
+        --bg-card: #ffffff;
+        --bg-input: #f0f0f0;
+        --bg-elevated: #ffffff;
+        
+        --text-primary: #1a1a1a;
+        --text-secondary: #4a4a4a;
+        --text-tertiary: #6a6a6a;
+        --text-disabled: #9a9a9a;
+        
+        --border: #e0e0e0;
+        --border-light: #d0d0d0;
+        --divider: #f0f0f0;
+        --shadow: rgba(0, 0, 0, 0.1);
+        --shadow-elevated: rgba(0, 0, 0, 0.15);
+        
+        --overlay: rgba(0, 0, 0, 0.4);
+        --overlay-light: rgba(0, 0, 0, 0.2);
+    }
+}
